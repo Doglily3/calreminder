@@ -4,17 +4,19 @@ import 'calendar_page.dart';
 import 'summary_page.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   int _selectedIndex = 1; // Default to the Calendar page
 
-  static List<Widget> _widgetOptions = <Widget>[
-    TodayListPage(),
-    CalendarPage(),
-    SummaryPage(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const TodayListPage(),
+    const CalendarPage(),
+    const SummaryPage(),
   ];
 
   void _onItemTapped(int index) {

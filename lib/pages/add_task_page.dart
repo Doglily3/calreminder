@@ -4,22 +4,22 @@ import 'package:intl/intl.dart';
 class AddTaskPage extends StatefulWidget {
   final DateTime selectedDate;
 
-  AddTaskPage({Key? key, required this.selectedDate}) : super(key: key);
+  const AddTaskPage({super.key, required this.selectedDate});
 
   @override
-  _AddTaskPageState createState() => _AddTaskPageState();
+  AddTaskPageState createState() => AddTaskPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   late DateTime _selectedDate;
   int _selectedReminder = 5;
-  List<int> _reminderOptions = [5, 10, 15, 20, 30];
+  final List<int> _reminderOptions = [5, 10, 15, 20, 30];
   String _selectedRepeat = 'None';
-  List<String> _repeatOptions = ['None', 'Daily', 'Weekly', 'Monthly'];
+  final List<String> _repeatOptions = ['None', 'Daily', 'Weekly', 'Monthly'];
   Color _selectedColor = Colors.blue;
-  List<Color> _colorOptions = [
+  final List<Color> _colorOptions = [
     Colors.blue,
     Colors.red,
     Colors.green,
@@ -36,35 +36,35 @@ class _AddTaskPageState extends State<AddTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Task'),
+        title: const Text('Add Task'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Title',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _noteController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Note',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Date',
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.calendar_today),
@@ -73,10 +73,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   text: DateFormat.yMd().format(_selectedDate)),
               onTap: _pickDate,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Remind',
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.access_time),
@@ -85,10 +85,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   text: '$_selectedReminder minutes early'),
               onTap: () => _selectReminder(),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Repeat',
                 border: OutlineInputBorder(),
                 suffixIcon: Icon(Icons.repeat),
@@ -110,21 +110,21 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             radius: 14,
                             backgroundColor: color,
                             child: _selectedColor == color
-                                ? Icon(Icons.check, color: Colors.white)
+                                ? const Icon(Icons.check, color: Colors.white)
                                 : Container(),
                           ),
                         ),
                       ))
                   .toList(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _saveTask,
-              child: Text('Create Task'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor, // 设置按钮的背景颜色
                 foregroundColor: Colors.white, // 设置按钮文字的颜色
               ),
+              child: const Text('Create Task'),
             ),
           ],
         ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SummaryPage extends StatelessWidget {
+  const SummaryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Summary'),
+        title: const Text('Summary'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Summary Page'),
       ),
     );

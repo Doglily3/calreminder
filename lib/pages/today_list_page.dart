@@ -3,11 +3,13 @@ import 'package:table_calendar/table_calendar.dart';
 import 'add_task_page.dart';  // 加入addtaskpage
 
 class TodayListPage extends StatefulWidget {
+  const TodayListPage({super.key});
+
   @override
-  _TodayListPageState createState() => _TodayListPageState();
+  TodayListPageState createState() => TodayListPageState();
 }
 
-class _TodayListPageState extends State<TodayListPage> {
+class TodayListPageState extends State<TodayListPage> {
   final CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -16,7 +18,7 @@ class _TodayListPageState extends State<TodayListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Today List'),
+        title: const Text('Today List'),
       ),
       body: Center(
         child: TableCalendar(
@@ -47,7 +49,7 @@ class _TodayListPageState extends State<TodayListPage> {
             MaterialPageRoute(builder: (context) => AddTaskPage(selectedDate: _selectedDay ?? DateTime.now())),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         //backgroundColor: Colors.blue,
       ),
     );
