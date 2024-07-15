@@ -35,7 +35,7 @@ class HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'TodayList',
+            label: 'Today List',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
