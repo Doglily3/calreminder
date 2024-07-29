@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'package:provider/provider.dart';
+import 'providers/task_provider.dart';
+import 'screens/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TaskProvider(),
+    child: MyApp(),
+  ));
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../models/task.dart';
+import '../providers/task_provider.dart';
+
 
 class AddTaskPage extends StatefulWidget {
   final DateTime selectedDate;
@@ -14,8 +18,8 @@ class AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   late DateTime _selectedDate;
-  int _selectedReminder = 5;
-  final List<int> _reminderOptions = [5, 10, 15, 20, 30];
+  //int _selectedReminder = 5;
+  //final List<int> _reminderOptions = [5, 10, 15, 20, 30];
   String _selectedRepeat = 'None';
   final List<String> _repeatOptions = ['None', 'Daily', 'Weekly', 'Monthly'];
   Color _selectedColor = Colors.blue;
@@ -73,8 +77,8 @@ class AddTaskPageState extends State<AddTaskPage> {
                   text: DateFormat.yMd().format(_selectedDate)),
               onTap: _pickDate,
             ),
-            const SizedBox(height: 10),
-            TextFormField(
+            //const SizedBox(height: 10),
+            /*TextFormField(
               readOnly: true,
               decoration: const InputDecoration(
                 labelText: 'Remind',
@@ -84,7 +88,7 @@ class AddTaskPageState extends State<AddTaskPage> {
               controller: TextEditingController(
                   text: '$_selectedReminder minutes early'),
               onTap: () => _selectReminder(),
-            ),
+            ),*/
             const SizedBox(height: 10),
             TextFormField(
               readOnly: true,
@@ -146,6 +150,7 @@ class AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
+/* 我们目前不需要这个
   void _selectReminder() {
     showModalBottomSheet(
       context: context,
@@ -167,6 +172,7 @@ class AddTaskPageState extends State<AddTaskPage> {
       },
     );
   }
+  */
 
   void _selectRepeat() {
     showModalBottomSheet(
@@ -190,11 +196,22 @@ class AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  void _saveTask() {
-    // 构造任务描述字符串
-    String taskDescription =
-        'Task: ${_titleController.text}, Date: ${DateFormat.yMd().format(_selectedDate)}';
-    // 返回任务描述并关闭页面
-    Navigator.pop(context, taskDescription);
-  }
+void _saveTask() {
+  // 创建一个新的Task对象
+  final task = Task(
+    title: _titleController.text,
+    note: _noteController.text,
+    dueDate: _selectedDate,
+    //nareminder: _selectedReminder,
+    repeat: _selectedRepeat,
+    color: _selectedColor,
+  );
+
+  // 使用Provider添加任务到数据库
+  Provider.of<TaskProvider>(context, listen: false).addTask(task);
+
+  // 返回主界面
+  Navigator.pop(context);
+}
+
 }
