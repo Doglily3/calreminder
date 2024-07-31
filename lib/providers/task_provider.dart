@@ -4,14 +4,16 @@ import '../database/database_helper.dart';
 
 class TaskProvider with ChangeNotifier {
   List<Task> _tasks = [];
-  DatabaseHelper _dbHelper = DatabaseHelper.instance;
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   List<Task> get tasks => _tasks;
 
-  void loadTasks() async {
-    _tasks = (await _dbHelper.fetchTasks()).cast<Task>();
+  void fetchTasksByDate(String date) async {
+    final taskMaps = await DatabaseHelper.instance.fetchTasksByDate(date);
+    _tasks = taskMaps.map((taskMap) => Task.fromMap(taskMap as Map<String, dynamic>)).toList();
     notifyListeners();
   }
+
 
   void addTask(Task task) async {
     await _dbHelper.insertTask(task.toMap());

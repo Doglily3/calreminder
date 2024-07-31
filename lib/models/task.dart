@@ -19,6 +19,17 @@ class Task {
     required this.color,
   });
 
+  factory Task.fromMap(Map<String, dynamic> data) {
+    return Task(
+      id: data['id'],
+      title: data['title'],
+      note: data['note'],
+      dueDate: data['dueDate'],
+      repeat: data['repeat'],
+      color: data['color'],
+    );
+  }
+  
   // 将对象转换为Map对象，以便SQLite操作
   Map<String, dynamic> toMap() {
     return {
