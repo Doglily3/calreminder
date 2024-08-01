@@ -1,3 +1,4 @@
+import 'package:intl/date_time_patterns.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:developer' as developer;
@@ -42,7 +43,7 @@ CREATE TABLE tasks(
     try {
       int id = await db.insert('tasks', task,
           conflictAlgorithm: ConflictAlgorithm.replace);
-      developer.log('Inserted task with ID: $id');
+      developer.log('Inserted task with ID: $id $task');
       return id;
     } catch (e) {
       developer.log('Error inserting task: $e');
@@ -66,11 +67,24 @@ CREATE TABLE tasks(
  Future<List<Task>> fetchTasksByDate(String date) async {
   final db = await database;
   try {
+    // Log the query execution to help in debugging the invocation and input to the function
+    developer.log('Fetching tasks for date: $date');
+
     final List<Map<String, dynamic>> maps = await db.query(
       'tasks',
       where: 'dueDate = ?',
       whereArgs: [date],
     );
+    
+    // Log the result of the query to check what is retrieved from the database
+    if (maps.isEmpty) {
+      developer.log('No tasks found for date $date');
+    } else {
+      developer.log('Retrieved tasks: ${maps.length} for date $date');
+      for (var map in maps) {
+        developer.log('Task details: ID=${map['id']}, Title=${map['title']}, Note=${map['note']}, DueDate=${map['dueDate']}, Repeat=${map['repeat']}, Color=${map['color']}');
+      }
+    }
     return List.generate(maps.length, (i) => Task.fromMap(maps[i]));
   } catch (e) {
     developer.log('Error fetching tasks by date $date: $e');

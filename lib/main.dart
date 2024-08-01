@@ -6,7 +6,7 @@ import 'screens/home_page.dart';
 void main() {
   runApp(ChangeNotifierProvider(
     create: (context) => TaskProvider(),
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
