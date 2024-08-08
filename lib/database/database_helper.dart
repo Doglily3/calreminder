@@ -64,33 +64,24 @@ CREATE TABLE tasks(
   }
 
   // Add this method in your DatabaseHelper to fetch tasks by date
- Future<List<Task>> fetchTasksByDate(String date) async {
+// 修改 DatabaseHelper 中的 fetchTasksByDate 方法，使其返回 List<Map<String, dynamic>>
+Future<List<Map<String, dynamic>>> fetchTasksByDate(String date) async {
   final db = await database;
   try {
-    // Log the query execution to help in debugging the invocation and input to the function
     developer.log('Fetching tasks for date: $date');
-
     final List<Map<String, dynamic>> maps = await db.query(
       'tasks',
       where: 'dueDate = ?',
       whereArgs: [date],
     );
-    
-    // Log the result of the query to check what is retrieved from the database
-    if (maps.isEmpty) {
-      developer.log('No tasks found for date $date');
-    } else {
-      developer.log('Retrieved tasks: ${maps.length} for date $date');
-      for (var map in maps) {
-        developer.log('Task details: ID=${map['id']}, Title=${map['title']}, Note=${map['note']}, DueDate=${map['dueDate']}, Repeat=${map['repeat']}, Color=${map['color']}');
-      }
-    }
-    return List.generate(maps.length, (i) => Task.fromMap(maps[i]));
+    developer.log('Fetched tasks: $maps');
+    return maps;  // 直接返回数据库查询结果
   } catch (e) {
     developer.log('Error fetching tasks by date $date: $e');
-    throw Exception('Failed to fetch tasks for date $date');
+    rethrow;
   }
 }
+
 
 
   Future<int> updateTask(Map<String, dynamic> task) async {

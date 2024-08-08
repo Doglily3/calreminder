@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
 import '../models/task.dart';
 import '../database/database_helper.dart';
 
@@ -8,11 +9,17 @@ class TaskProvider with ChangeNotifier {
 
   List<Task> get tasks => _tasks;
 
-  void fetchTasksByDate(String date) async {
+void fetchTasksByDate(String date) async {
+  try {
     final taskMaps = await DatabaseHelper.instance.fetchTasksByDate(date);
-    _tasks = taskMaps.map((taskMap) => Task.fromMap(taskMap as Map<String, dynamic>)).toList();
+    _tasks = taskMaps.map((taskMap) => Task.fromMap(taskMap)).toList();
     notifyListeners();
+  } catch (e) {
+    // 这里可以处理错误，例如记录日志或更新 UI 状态
+    developer.log('Error fetching tasks by date: $e');
   }
+}
+
 
 
   void addTask(Task task) async {
